@@ -1,0 +1,30 @@
+<div class="card mt-4">
+    <div class="card-header">Turimų įrašų sąrašas</div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nr.</th>
+                    <th>Grupė/atlikėjas</th>
+                    <th>Albumo pavadinimas</th>
+                    <th>Metai</th>
+                    <th>Žanras</th>
+                    <th class="table-veiksmai">Veiksmai</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let record of records; let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{record.artist}}</td>
+                    <td>{{record.album}}</td>
+                    <td>{{record.year}}</td>
+                    <td>{{record.genre}}</td>
+                    <td class="d-flex justify-content-start">
+                        <a class="btn btn-sm btn-outline-success mx-1">Redaguoti</a>
+                        <a class="btn btn-sm btn-outline-danger">Ištrinti</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

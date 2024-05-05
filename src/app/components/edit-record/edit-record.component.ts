@@ -3,11 +3,13 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecordService } from '../../services/record.service';
 import { Record } from '../../models/record';
+import { LoadingComponent } from '../loading/loading.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-record',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, LoadingComponent, CommonModule],
   templateUrl: './edit-record.component.html',
   styleUrl: './edit-record.component.css'
 })
@@ -17,6 +19,8 @@ export class EditRecordComponent {
   public album: string | null = null;
   public year: number | null = null;
   public genre: string | null = null;
+
+  public isLoading = false;
 
   constructor (private route: ActivatedRoute, private router: Router, private recordService: RecordService) {
     this.id = this.route.snapshot.params["id"];
@@ -38,7 +42,9 @@ export class EditRecordComponent {
         year: this.year,
         genre: this.genre,
       }
+      this.isLoading = true;
       this.recordService.editRecord(editedRecord).subscribe(() => {
+        this.isLoading = false;
         this.router.navigate(["list"]);
       });
     }

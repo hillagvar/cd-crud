@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Record } from '../models/record';
 import { HttpClient } from '@angular/common/http';
+import { delay, map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,25 @@ export class RecordService {
    }
 
    public loadData() {
-    return this.http.get<{[key: string] : Record}>("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records.json");
-   }
+
+    //gauname observable
+
+    return this.http
+    .get<{[key: string] : Record}>("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records.json")
+   .pipe(
+      map ( (data): Record[]=> {
+        let presents = [];
+        for (let x in data) {
+          presents.push({...data[x], id:x });
+        }
+        return presents;
+      }),
+      // tap ( (data) => {
+      //   this.records = data;
+      // })
+      delay(1000)
+    )
+  }
 
    public loadRecord(id: string) {
     return this.http.get<Record>("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records/"+id+".json");

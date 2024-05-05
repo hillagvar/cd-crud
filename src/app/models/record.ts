@@ -3,5 +3,5 @@ export interface Record {
     album: string;
     year: number;
     genre: string;
-    id? : string;
+    id : string | null;
 }

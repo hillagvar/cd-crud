@@ -20,8 +20,8 @@
                     <td>{{record.year}}</td>
                     <td>{{record.genre}}</td>
                     <td class="d-flex justify-content-start">
-                        <a class="btn btn-sm btn-outline-success mx-1" (click)="editRecord(record.id)">Redaguoti</a>
-                        <a class="btn btn-sm btn-outline-danger">Ištrinti</a>
+                        <a class="btn btn-sm btn-outline-success mx-1" [routerLink]="['/edit', record.id]">Redaguoti</a>
+                        <button class="btn btn-sm btn-outline-danger" (click)="deleteRecord(record.id)">Ištrinti</button>
                     </td>
                 </tr>
             </tbody>

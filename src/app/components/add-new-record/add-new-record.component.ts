@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { RecordService } from '../../services/record.service';
-import { CommonModule } from '@angular/common';
-import { Record } from '../../models/record';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -27,13 +25,14 @@ export class AddNewRecordComponent {
       artist: this.artist,
       album: this.album,
       year: this.year,
-      genre: this.genre
-      }) 
-    this.artist = null;
-    this.album = null;
-    this.year = null;
-    this.genre = null;
+      genre: this.genre,
+      id: null,
+      }).subscribe(() => {
+        this.artist = null;
+        this.album = null;
+        this.year = null;
+        this.genre = null;
+      });
     }
   }
-
 }

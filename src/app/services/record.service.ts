@@ -12,18 +12,26 @@ export class RecordService {
   constructor(private http: HttpClient) {
    }
 
-   private addToDatabase(record: Record) {
-    this.http.post("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records.json", record)
-    .subscribe(() => {});
-   }
-
    public addRecord(record: Record) {
-    this.records.push(record);
-    this.addToDatabase(record);
+    // this.records.push(record);
+    return this.http.post("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records.json", record);
    }
 
    public loadData() {
-    return this.http.get<{[key: string] : Record}>("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records.json"
-);
+    return this.http.get<{[key: string] : Record}>("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records.json");
    }
+
+   public loadRecord(id: string) {
+    return this.http.get<Record>("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records/"+id+".json");
+   }
+
+    public editRecord(item: Record) {
+    return this.http.patch("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records/"+item.id+".json", item);
+   }
+
+    public deleteRecord(id: string) {
+    return this.http.delete("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records/"+id+".json");
+   }
+
+
 }

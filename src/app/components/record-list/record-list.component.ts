@@ -16,21 +16,28 @@ export class RecordListComponent {
   public records: Record[] = [];
 
   public constructor(private recordService: RecordService) {
+    this.loadData();
+  }
+
+  private loadData() {
     this.recordService.loadData().subscribe((data) => {
+      this.records = [];
+      for (let z in data) {
+        this.records.push({...data[z], id: z});
+      }
+    });
+  }
 
-      Object.keys(data).forEach((k) => {
-        data[k].id = k;
-        this.records.push(data[k]);  
-      }); 
-      console.log(this.records);
-  })
+  public deleteRecord(id: string | null) {
+    if (id != null) {
+      this.recordService.deleteRecord(id).subscribe(() => {
+        this.loadData();
+      })
+    }
   }
 
 
-  //test
-  editRecord(id: string | undefined) {
-    console.log(id);
-  }
+  
 }
 
 

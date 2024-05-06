@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Record } from '../models/record';
 import { HttpClient } from '@angular/common/http';
 import { delay, map, tap } from 'rxjs';
@@ -10,12 +10,17 @@ export class RecordService {
 
   public records: Record[] = [];
 
+  public onRecordCountChange = new EventEmitter();
+
   constructor(private http: HttpClient) {
    }
 
    public addRecord(record: Record) {
     // this.records.push(record);
-    return this.http.post("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records.json", record);
+    return this.http.post("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records.json", record)
+    .pipe(
+      tap(() => this.onRecordCountChange.emit())
+    );
    }
 
    public loadData() {
@@ -24,16 +29,17 @@ export class RecordService {
     .get<{[key: string] : Record}>("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records.json")
    .pipe(
       map ( (data): Record[]=> {
-        let presents = [];
+        let records = [];
         for (let x in data) {
-          presents.push({...data[x], id:x });
+          records.push({...data[x], id:x });
         }
-        return presents;
+        this.records = records;
+        return records;
       }),
       // tap ( (data) => {
       //   this.records = data;
       // })
-      delay(1000)
+      // delay(1000)
     )
   }
 
@@ -46,7 +52,10 @@ export class RecordService {
    }
 
     public deleteRecord(id: string) {
-    return this.http.delete("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records/"+id+".json");
+    return this.http.delete("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records/"+id+".json")
+    .pipe(
+      tap(() => this.onRecordCountChange.emit())
+    );
    }
 
 

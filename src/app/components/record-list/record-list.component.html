@@ -2,7 +2,7 @@
     <app-loading *ngIf="isLoading"></app-loading>
     <div class="card-header">Dovanų sąrašas</div>
     <div class="card-body">
-        <app-error *ngIf="isError" [message]="'Įrašų sąrašo užkrauti napavyko'"></app-error>
+        <app-error *ngIf="isError" [message]="'Įrašų sąrašo užkrauti nepavyko'" (close)="closeError()"></app-error>
         <table class="table" *ngIf="!isLoading && !isError">
             <thead>
                 <tr>

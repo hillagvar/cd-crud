@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { RecordService } from '../../services/record.service';
 import { RouterLink } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
+import { ErrorComponent } from '../error/error.component';
 
 @Component({
   selector: 'app-record-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, LoadingComponent],
+  imports: [CommonModule, RouterLink, LoadingComponent, ErrorComponent],
   templateUrl: './record-list.component.html',
   styleUrl: './record-list.component.css'
 })
@@ -29,13 +30,6 @@ export class RecordListComponent {
 
     this.isLoading = true;
     this.isError = false;
-
-    // this.recordService.loadData().subscribe((data) => {
-    //   this.records = [];
-    //   for (let z in data) {
-    //     this.records.push({...data[z], id: z});
-    //   }
-    // });
 
     obs.subscribe({
       next: (data) => {  

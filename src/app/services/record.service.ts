@@ -20,8 +20,6 @@ export class RecordService {
 
    public loadData() {
 
-    //gauname observable
-
     return this.http
     .get<{[key: string] : Record}>("https://cd-crud-default-rtdb.europe-west1.firebasedatabase.app/records.json")
    .pipe(

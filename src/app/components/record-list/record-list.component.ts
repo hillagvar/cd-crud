@@ -59,6 +59,10 @@ export class RecordListComponent {
     }
   }
 
+  public closeError() {
+    this.loadData();
+  }
+
 }
 
 
